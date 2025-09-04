@@ -1,10 +1,12 @@
 <template>
     <div>
         <el-carousel :interval="5000" arrow="always" :height="carouselHeight">
-            <el-carousel-item v-for="(item, i) in swiperList" :key="i">
-                <el-image :src="encodeUrl(item.imageUrl)" alt="" style="width:100%;height:100%" fit="cover"
+            <el-carousel-item v-for="(item, i) in swiperList" :key="item.id || i">
+                <el-image :src="getFullImageUrl(item.imageUrl)" alt="" style="width:100%;height:100%" fit="cover"
                     @error="handleImageError" />
+                    <!-- {{ item.imageUrl}} -->
             </el-carousel-item>
+            
         </el-carousel>
     </div>
 </template>
@@ -57,6 +59,20 @@ export default {
                 const [key, value] = param.split('=');
                 return `${key}=${encodeURIComponent(value)}`;
             }).join('&');
+        },
+        getFullImageUrl(url) {
+            if (!url) return '';
+            // 如果已经是完整URL，直接返回
+            if (url.startsWith('http')) {
+                return url;
+            }
+            // 处理相对路径
+            const baseUrl = process.env.NODE_ENV === 'production' 
+                ? 'http://81.71.17.188:8088'  // 生产环境
+                : 'http://127.0.0.1:8088';    // 开发环境
+            
+            // 确保URL格式正确
+            return url.startsWith('/') ? `${baseUrl}${url}` : `${baseUrl}/${url}`;
         },
         handleImageError(event) {
             console.error('图片加载失败:', event.target.src);
