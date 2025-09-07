@@ -1,0 +1,32 @@
+// OSS 本地配置文件示例
+// 1. 复制此文件为 oss-config.local.js
+// 2. 填入你的实际配置信息
+// 3. 不要将此文件提交到版本控制
+
+const ossConfig = {
+  // OSS 地域，如：oss-cn-hangzhou, oss-cn-shanghai, oss-cn-beijing
+  // 查看你的地域：https://help.aliyun.com/document_detail/31837.html
+  region: 'oss-cn-hangzhou',
+  
+  // 访问密钥 ID
+  // 获取方式：https://ram.console.aliyun.com/manage/ak
+  accessKeyId: '',
+  
+  // 访问密钥密钥
+  accessKeySecret: '',
+  
+  // 存储桶名称
+  // 创建地址：https://oss.console.aliyun.com/bucket
+  bucket: '',
+  
+  // 自定义域名（可选）
+  // 如果你绑定了自定义域名，可以在这里设置
+  // 例如：'https://cdn.example.com'
+  customDomain: '',
+  
+  // 默认上传路径前缀
+  // 所有上传的文件都会放在这个目录下
+  defaultPrefix: 'images/'
+};
+
+module.exports = ossConfig;

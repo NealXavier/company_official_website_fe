@@ -54,13 +54,14 @@
 
 <script>
 import service from '@/utils/request' // 导入封装好的 axios 实例
-import { getFooterData, updateFooterData } from '@/api/index'
+import { getFooterData, insertFooterData,updateFooterData } from '@/api/index'
 import { baseUrl } from '@/config/index'
 
 export default {
     name: 'Info',
     data() {
         return {
+            tmpInfoData:{},
             footerData: {
                 id: 1,
                 phone: '',
@@ -80,12 +81,16 @@ export default {
     mounted() {
         this.fetchFooterData();
     },
+    unmounted(){
+        this.tmpInfoData = {};
+    },
     methods: {
         async fetchFooterData() {
             try {
                 const response = await getFooterData();
                 if (response.code === 0 && response.data.length > 0) {
                     this.footerData = response.data[0];
+                    this.tmpInfoData = response.data[0];
                 } else {
                     console.error('Failed to fetch footer data:', response.message);
                 }
@@ -95,7 +100,12 @@ export default {
         },
         async saveFooterData() {
             try {
-                const response = await updateFooterData(this.footerData);
+                let response;
+                if(Object.keys(this.tmpInfoData).length > 0){
+                    response = await updateFooterData(this.footerData);
+                }else{
+                    response = await insertFooterData(this.footerData);
+                }
                 if (response.code === 0) {
                     this.$message.success('保存成功');
                 } else {
@@ -103,7 +113,7 @@ export default {
                 }
             } catch (error) {
                 // 判断是否是登录超时
-                if (error.response.status === 401) {
+                if (error?.response?.status === 401) {
                     this.$message.error('登录超时，请重新登录');
                 } else {
                     this.$message.error('保存失败: ' + error);

@@ -118,7 +118,7 @@
 </template>
 
 <script>
-import { getSwiperList, addCarousel, deleteCarouselById, updateCarousel, uploadFile } from '@/api/index.js';
+import { getAllCarousels, addCarousel, deleteCarouselById, updateCarousel, uploadFile } from '@/api/index.js';
 import { baseUrl } from '@/config/index';
 
 export default {
@@ -157,7 +157,7 @@ export default {
   methods: {
     async fetchCarousels() {
       try {
-        const response = await getSwiperList();
+        const response = await getAllCarousels();
         if (response.code === 0) {
           this.carousels = response.data;
           this.totalCarousels = response.data.length;
