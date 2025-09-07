@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve --open",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "upload-images": "node scripts/upload-to-oss.js",
+    "setup-oss": "node scripts/setup-oss.js"
   },
   "dependencies": {
+    "ali-oss": "^6.23.0",
     "axios": "^1.2.0",
     "core-js": "^3.6.5",
     "element-ui": "^2.15.9",

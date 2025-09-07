@@ -1,10 +1,9 @@
 <template>
     <div>
         <el-carousel :interval="5000" arrow="always" :height="carouselHeight">
-            <el-carousel-item v-for="(item, i) in swiperList" :key="item.id || i">
-                <el-image :src="getFullImageUrl(item.imageUrl)" alt="" style="width:100%;height:100%" fit="cover"
+            <el-carousel-item v-for="(item, i) in swiperList" :key="item || i">
+                <el-image :src="item.imageUrl" alt="" style="width:100%;height:100%" fit="cover"
                     @error="handleImageError" />
-                    <!-- {{ item.imageUrl}} -->
             </el-carousel-item>
             
         </el-carousel>
@@ -12,7 +11,7 @@
 </template>
 
 <script>
-import { getSwiperList } from '@/api/index.js' // 导入API方法
+import { getAllCarousels } from '@/api/index.js' // 导入API方法
 
 export default {
     name: 'Banner',
@@ -36,15 +35,13 @@ export default {
     },
     methods: {
         async fetchSwiperList() {
-            console.log('fetchSwiperList called');
             try {
-                console.log('Before API call');
-                const response = await getSwiperList();
+                const response = await getAllCarousels();
                 console.log('API response:', response);
                 if (response && response.data) {
-                    // 修改这里：只过滤掉deleted为true的轮播图
+                    // 直接使用后端的CDN地址，不需要额外处理
                     this.swiperList = response.data.filter(item => !item.deleted);
-                    console.log('Filtered swiperList:', this.swiperList);
+                    console.log('CDN swiperList:', this.swiperList);
                 } else {
                     console.error('API response does not contain data');
                 }
@@ -60,20 +57,22 @@ export default {
                 return `${key}=${encodeURIComponent(value)}`;
             }).join('&');
         },
-        getFullImageUrl(url) {
-            if (!url) return '';
-            // 如果已经是完整URL，直接返回
-            if (url.startsWith('http')) {
-                return url;
-            }
-            // 处理相对路径
-            const baseUrl = process.env.NODE_ENV === 'production' 
-                ? 'http://81.71.17.188:8088'  // 生产环境
-                : 'http://127.0.0.1:8088';    // 开发环境
+        // getFullImageUrl(url) {
+        //     if (!url) return '';
             
-            // 确保URL格式正确
-            return url.startsWith('/') ? `${baseUrl}${url}` : `${baseUrl}/${url}`;
-        },
+        //     // 如果已经是完整URL（http/https），直接返回（支持CDN地址）
+        //     if (url.startsWith('http')) {
+        //         return url;
+        //     }
+            
+        //     // 如果不是完整URL，使用后端地址拼接（兼容旧数据）
+        //     const baseUrl = process.env.NODE_ENV === 'production' 
+        //         ? 'http://81.71.17.188:8088'  // 生产环境
+        //         : 'http://127.0.0.1:8088';    // 开发环境
+            
+        //     // 确保URL格式正确
+        //     return url.startsWith('/') ? `${baseUrl}${url}` : `${baseUrl}/${url}`;
+        // },
         handleImageError(event) {
             console.error('图片加载失败:', event.target.src);
             event.target.src = require('@/assets/banner/default.jpg'); // 替换为默认图片路径

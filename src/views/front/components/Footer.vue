@@ -59,12 +59,12 @@ export default {
         async fetchFooterData() {
             try {
                 // 获取Footer数据
-                const response = await getFooterData();
+                // const response = await getFooterData();
                 // 如果请求成功，且数据不为空，则更新数据
                 if (response.code === 0 && response.data.length > 0) {
-                    this.footerData = response.data[0];
+                    // this.footerData = response.data[0];
                     // 将数据缓存到localStorage
-                    localStorage.setItem('footerData', JSON.stringify(this.footerData));
+                    // localStorage.setItem('footerData', JSON.stringify(this.footerData));
                 } else {
                     console.error('Failed to fetch footer data:', response.message);
                 }

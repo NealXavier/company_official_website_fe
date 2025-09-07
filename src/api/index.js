@@ -1,9 +1,25 @@
 import request from '@/utils/request'
 
+
+
 // 获取轮播图数据
-export function getSwiperList() {
+export function getAllCarousels() {
   return request({
     url: '/v1/carousels/getAllCarousels', // 使用代理路径
+    method: 'get',
+  }).then(response => {
+    console.log('API request successful:', response); // 打印API请求成功的响应
+    return response; // 返回整个response对象
+  }).catch(error => {
+    console.error('API request failed:', error); // 打印API请求失败的错误
+    throw error;
+  });
+}
+
+export function getSwiperList() {
+  return request({
+    // url: '/v1/carousels/getAllCarousels', // 使用代理路径
+    url: '/v1/osss/getAllOsss',
     method: 'get',
   }).then(response => {
     console.log('API request successful:', response); // 打印API请求成功的响应
@@ -150,6 +166,21 @@ export function getFooterData() {
   return request({
     url: '/v1/basicInformation/getAllBasicInformation', // 使用代理路径
     method: 'get',
+  }).then(response => {
+    console.log('API request successful:', response); // 打印API请求成功的响应
+    return response; // 返回整个response对象
+  }).catch(error => {
+    console.error('API request failed:', error); // 打印API请求失败的错误
+    throw error;
+  });
+}
+
+// 插入基础信息数据 （插入Footer 数据）
+export function insertFooterData(data){
+  return request({
+    url: '/v1/basicInformation/addBasicInformation',
+    method: 'post',
+    data
   }).then(response => {
     console.log('API request successful:', response); // 打印API请求成功的响应
     return response; // 返回整个response对象

@@ -1,21 +1,31 @@
 <!--
- * @Date: 2023-11-24 22:59:48
- * @LastEditTime: 2023-11-26 22:40:31
+ * @Date: 2025-9-8 22:59:48
+ * @LastEditTime: 2025-9-8 22:40:31
 -->
 
 # 一个全套公司企业官网 前端项目 （springboot +vue ）
 
-[后端项目传送门](https://github.com/liyinchigithub/company_official_website_server)
+[后端项目传送门](https://github.com/NealXavier/company_official_website_server)
 
 [demo体验](http://81.71.17.188:9000/#/home)
 
+[主页内容图片上传](http://127.0.0.1:9000/#/admin)
+
 管理员账号：admin 密码：123456
+
+需要现在后端项目Admin表插入一条记录才能登录
+
+前端主页的内容低俗在管理端上传
+
+![image](https://github.com/NealXavier/picx-images-hosting/raw/master/admin.5xazgy542h.webp)
+
 
 ## 技术栈
 
 - nodejs v14.21.3、v12.22.12
 - vue 2.6 
 - elementUI 2.15
+
 
 ![image](https://github.com/user-attachments/assets/ef4b9bbc-5e31-4a48-98c5-56719fd82351)
 
