@@ -15,6 +15,8 @@
 
 需要现在后端项目Admin表插入一条记录才能登录
 
+前端主页的内容低俗在管理端上传
+
 ![image](https://github.com/NealXavier/picx-images-hosting/raw/master/admin.5xazgy542h.webp)
 
 
