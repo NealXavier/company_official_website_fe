@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/nginx.conf
+      - ./dist:/usr/share/nginx/html
+      - ./docker/ssl:/etc/nginx/ssl
+    depends_on:
+      - frontend
+    networks:
+      - frontend-network
+    restart: always
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ./dist:/app/dist
+    networks:
+      - frontend-network
+    restart: always
+
+networks:
+  frontend-network:
+    driver: bridge
