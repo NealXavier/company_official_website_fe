@@ -1,0 +1,24 @@
+{
+  "migration": {
+    "currentVersion": "2.6.11",
+    "targetVersion": "3.5.21",
+    "strategy": "gradual",
+    "phases": [
+      {
+        "name": "analysis",
+        "status": "pending",
+        "dependencies": []
+      },
+      {
+        "name": "compatibility",
+        "status": "pending",
+        "dependencies": ["@vue/composition-api"]
+      },
+      {
+        "name": "migration",
+        "status": "pending",
+        "dependencies": ["vue@3.x", "vue-router@4.x", "pinia@2.x"]
+      }
+    ]
+  }
+}
