@@ -1,0 +1,36 @@
+FROM node:14-alpine as build-stage
+
+WORKDIR /app
+
+# 复制 package 文件
+COPY package*.json ./
+
+# 安装 Python 和构建工具（用于兼容性）
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
+    apk add --no-cache python3 make g++
+
+# 安装依赖
+RUN npm install
+
+# 复制项目文件
+COPY . .
+
+# 构建生产版本
+RUN npm run build
+
+# 生产环境使用 nginx
+FROM nginx:alpine as production-stage
+
+# 复制构建文件到 nginx
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+
+# 设置正确的文件权限，确保nginx用户可以访问
+RUN chown -R nginx:nginx /usr/share/nginx/html && \
+    chmod -R 755 /usr/share/nginx/html
+
+# 复制 nginx 配置
+COPY docker/nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
