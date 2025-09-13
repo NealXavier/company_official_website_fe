@@ -1,13 +1,13 @@
 <!--
- * @Date: 2025-9-8 22:59:48
- * @LastEditTime: 2025-9-8 22:40:31
+ * @Date: 2025-9-13 22:59:48
+ * @LastEditTime: 2025-9-13 22:40:31
 -->
 
 # 一个全套公司企业官网 前端项目 （springboot +vue ）
 
 [后端项目传送门](https://github.com/NealXavier/company_official_website_server)
 
-[demo体验](http://81.71.17.188:9000/#/home)
+[demo体验](http://8.138.193.57/#/home)
 
 [主页内容图片上传](http://127.0.0.1:9000/#/admin)
 
@@ -22,7 +22,7 @@
 
 ## 技术栈
 
-- nodejs v14.21.3、v12.22.12
+- nodejs v14.21.3、v12.22.12 (依赖 node-sass 其他 node 会有版本问题 )
 - vue 2.6 
 - elementUI 2.15
 
@@ -60,10 +60,6 @@ yarn
 yarn dev
 ```
 
-### 打包
-```
-yarn build
-```
 
 # 页面
 
@@ -236,8 +232,8 @@ npm 版本
 >src/config/index.js
 
 ```
-// const baseUrl = 'http://127.0.0.1:8088'   // 测试环境地址
-const baseUrl = 'http://81.71.17.188:8088' // 产线地址
+const baseUrl = 'http://127.0.0.1:8088'   // 测试环境地址
+// const baseUrl = 'http://81.71.17.188:8088' // 产线地址
 
 export {
     baseUrl
@@ -257,8 +253,8 @@ module.exports = {
     port: 9000,
     proxy: {
       '/api/': {
-        // target: 'http://127.0.0.1:8088',   // 测试环境
-        target: 'http://81.71.17.188:8088', // 产线地址
+        target: 'http://127.0.0.1:8088',   // 测试环境
+        // target: '', // 产线地址
         changeOrigin: true,  // 是否跨域
         pathRewrite: {
           '^/api/': ''
@@ -277,22 +273,15 @@ module.exports = {
 ```
 
 
-## 打包
+## 打包和部署
+
+![image](https://github.com/NealXavier/picx-images-hosting/raw/master/envproduction.41yew7pn9h.webp)
+
+![image](https://github.com/NealXavier/picx-images-hosting/raw/master/nginxconf.7p3yjqlfr7.webp)
 
 ```
-npm run build
-```
+ 补充
+ 打包镜像： ./build-local.sh 
+ 执行镜像： docker run -d --name companyfe -p [port]:[port] company-website:prod-[时间格式]
 
-## 部署
-
-将dist文件夹下的文件，放到服务器上
-
-## 启动
-
-```
-npm install
-```
-
-```
-npm run serve
 ```
