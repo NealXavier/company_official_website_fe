@@ -9,8 +9,6 @@ on:
     types: [opened, assigned]
   pull_request_review:
     types: [submitted]
-  push:
-    branches: [ "refractor/vue3" ]
 
 jobs:
   claude:
